@@ -251,6 +251,10 @@ PrefabInstance:
       propertyPath: 'm_BlendShapeWeights.Array.data[41]'
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 2056eea1f630efd47b12933bef3ab84e, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
