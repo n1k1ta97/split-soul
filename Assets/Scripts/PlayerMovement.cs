@@ -75,9 +75,18 @@ public class PlayerMovement : MonoBehaviour
 
         // Apply move force
         if (isGrounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * (isRunning ? runSpeed : 1f), ForceMode.Force);
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
         else
+        {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+
+        if (isRunning)
+        {
+            rb.AddForce(moveDirection.normalized * runSpeed, ForceMode.Impulse);
+        }
     }
 
     private void Jump()
@@ -99,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isRunning = false;
-        if (Input.GetKey(runKey))
+        if (Input.GetKey(runKey) && isGrounded)
         {
             isRunning = true;
         }
