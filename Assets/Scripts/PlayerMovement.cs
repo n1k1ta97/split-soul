@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public float playerHeight;
     public LayerMask groundLayers;
 
+    [Header("Animation")]
+    public Animator animator;
+
     bool isRunning;
     bool jumpReady;
     bool isGrounded;
@@ -54,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
 
         HandleInput();
         CheckAndLimitMoveSpeed();
+
+        animator.SetBool("isRunning", isRunning);
     }
 
     private void FixedUpdate()
@@ -124,5 +129,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 maxVelocity = flatVelocity.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(maxVelocity.x, rb.linearVelocity.y, maxVelocity.z);
         }
+
+        animator.SetBool("isWalking", flatVelocity.magnitude > 0.0001);
     }
 }
