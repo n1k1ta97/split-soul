@@ -56,9 +56,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HandleInput();
+        HandleAnimationStates();
         CheckAndLimitMoveSpeed();
-
-        animator.SetBool("isRunning", isRunning);
     }
 
     private void FixedUpdate()
@@ -115,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
         isRunning = false;
         if (Input.GetKey(runKey) && isGrounded)
         {
+            
             isRunning = true;
         }
     }
@@ -129,7 +129,27 @@ public class PlayerMovement : MonoBehaviour
             Vector3 maxVelocity = flatVelocity.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(maxVelocity.x, rb.linearVelocity.y, maxVelocity.z);
         }
+    }
 
-        animator.SetBool("isWalking", flatVelocity.magnitude > 0.0001);
+    private void HandleAnimationStates()
+    {
+        float flatMoveSpeed = new Vector3(hInput, 0f, vInput).magnitude;
+        animator.SetFloat("Speed", flatMoveSpeed);
+
+        animator.SetBool("isRunning", isRunning);
+
+        float verticalVelocity = new Vector3(0f, rb.linearVelocity.y, 0f).normalized.magnitude;
+        if (verticalVelocity > 0)
+        {
+            animator.SetBool("isJumping", true);
+        }
+
+        if (verticalVelocity < 0)
+        {
+            animator.SetBool("isFalling", true);
+        }
+
+        animator.SetBool("isJumping", false);
+        animator.SetBool("isFalling", false);
     }
 }
